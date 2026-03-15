@@ -1212,7 +1212,8 @@ impl Client {
             .map(|v| v as u32);
 
         if let Some(version) = protocol_version {
-            if version != SDK_PROTOCOL_VERSION {
+            // Accept protocol versions >= 2 for forward compatibility
+            if version < 2 {
                 return Err(CopilotError::ProtocolMismatch {
                     expected: SDK_PROTOCOL_VERSION,
                     actual: version,
